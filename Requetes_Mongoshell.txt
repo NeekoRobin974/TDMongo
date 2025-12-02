@@ -1,10 +1,11 @@
-db.produits.find()
-db.produits.countDocuments({})
-
-db.produits.find({"libelle": "Margherita"})
-
-db.produits.find({}, {categorie:1,numero:1,libelle:1})
-
-db.produits.find({"tarifs.tarif": {$lt: 8.0}})
-db.produits.find({ "tarifs.taille": "grande", "tarifs.tarif": {$lt: 8.0}})
-db.produits.insertOne({ numero: 11, libelle: "nouveau produit", description: "nouveau produit pour la question 10", categorie: "Nouveaux", tarifs: [ { taille: "normale", tarif: 4.0}, {taille:"grande", tarif: 6.0}] })
+1) db.produits.find()
+2) db.produits.countDocuments({})
+3) db.produits.find().sort({numero : -1})
+4) db.produits.find({"libelle": "Margherita"})
+5) db.produits.find({categorie :"Boissons"})
+6) db.produits.find({}, {categorie:1,numero:1,libelle:1})
+7) db.produits.find({ },{categorie:1,numero:1,libelle:1,tarifs:1})
+8) db.produits.find({"tarifs.tarif": {$lt: 8.0}})
+9) db.produits.find({ "tarifs.taille": "grande", "tarifs.tarif": {$lt: 8.0}})
+10) db.produits.insertOne({ numero: 11, libelle: "nouveau produit", description: "nouveau produit pour la question 10", categorie: "Nouveaux", tarifs: [ { taille: "normale", tarif: 4.0}, {taille:"grande", tarif: 6.0}] })
+11) db.produits.find({numero: 1}, {recettes: 1})
