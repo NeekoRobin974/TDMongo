@@ -78,3 +78,22 @@ foreach ($db as $prod) {
     echo "<br>";
 }
 echo "<br>";
+
+
+
+echo "4) Liste des produits associés à 4 recettes";
+$db = $c->pizzashop->produits
+    ->find(
+        ["recettes" => ['$size' => 4]],
+        ['projection' =>
+            ["numero" => 1,
+                "libelle" => 1,
+                "recettes" => 1,]
+        ]
+    );
+
+foreach ($db as $prod) {
+    echo "<br>Numéro : " . (isset($prod["numero"]) ? $prod["numero"] : "") . " | ";
+    echo "Libellé : " . (isset($prod["libelle"]) ? $prod["libelle"] : "");
+}
+echo "<br>";
