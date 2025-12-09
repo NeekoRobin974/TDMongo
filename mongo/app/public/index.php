@@ -97,3 +97,24 @@ foreach ($db as $prod) {
     echo "Libellé : " . (isset($prod["libelle"]) ? $prod["libelle"] : "");
 }
 echo "<br>";
+echo "<br>";
+
+
+
+echo "5) afficher le produit n°6, compléter en listant les recettes associées (nom et difficulté)";
+$produit = $c->pizzashop->produits->findOne(["numero" => 6]);
+
+if ($produit) {
+    echo "<br>Produit : " . ($produit["libelle"] ?? "") . "<br>";
+
+    $recettes = $c->pizzashop->recettes->find(
+        ["ingredients" => $produit["libelle"]],
+        ['projection' => ["nom" => 1, "difficulte" => 1]]
+    );
+
+    foreach ($recettes as $recette) {
+        echo "Recette : " . ($recette["nom"] ?? "") . " - ";
+        echo "Difficulté : " . ($recette["difficulte"] ?? "") . "<br>";
+    }
+}
+echo "<br>";
