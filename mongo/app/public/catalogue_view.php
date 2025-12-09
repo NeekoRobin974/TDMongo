@@ -1,3 +1,9 @@
+<?php
+/**
+ * @var string|null $categorie
+ * @var MongoDB\Collection $collection
+ */
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
