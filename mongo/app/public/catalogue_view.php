@@ -62,6 +62,57 @@
             ?>
 
         <?php endif; ?>
+        <?php if ($categorie === null): ?>
+        <hr>
+        <h2>Ajouter un nouveau produit</h2>
+        <form method="POST">
+            <div>
+                <label for="categorie_produit">Catégorie :</label>
+                <select name="categorie_produit" id="categorie_produit" required>
+                    <option value="">-- Choisir --</option>
+                    <?php foreach ($categories as $cat): ?>
+                        <option value="<?php echo htmlspecialchars($cat); ?>"><?php echo htmlspecialchars($cat); ?></option>
+                    <?php endforeach; ?>
+                    <option value="__nouvelle__">+ Nouvelle catégorie</option>
+                </select>
+            </div>
+
+            <div id="nouvelle-categorie">
+                <label for="nouvelle_categorie_input">Nouvelle catégorie :</label>
+                <input type="text" name="nouvelle_categorie" id="nouvelle_categorie_input">
+            </div>
+
+            <div>
+                <label for="libelle">Libellé :</label>
+                <input type="text" name="libelle" id="libelle" required>
+            </div>
+
+            <div>
+                <label for="description">Description :</label>
+                <textarea name="description" id="description" rows="3"></textarea>
+            </div>
+
+            <div>
+                <label>Tarifs :</label>
+                <div id="tarifs-container">
+                    <div>
+                        <select name="tailles[]">
+                            <option value="">-- Taille --</option>
+                            <?php foreach ($tailles_disponibles as $taille): ?>
+                                <option value="<?php echo $taille; ?>"><?php echo $taille; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <input type="number" name="tarifs[]" placeholder="Prix">
+                    </div>
+                </div>
+                <button type="button" onclick="ajouterTarif()">+ Ajouter un tarif</button>
+            </div>
+
+            <button type="submit">Ajouter le produit</button>
+        </form>
+
+        <script src="catalogue.js"></script>
+        <?php endif; ?>
     </div>
 </body>
 </html>
