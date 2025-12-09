@@ -79,8 +79,29 @@ foreach ($db as $prod) {
 }
 echo "<br>";
 
-echo "5) afficher le produit n°6, compléter en listant les recettes associées (nom et difficulté)";
 
+
+echo "4) Liste des produits associés à 4 recettes";
+$db = $c->pizzashop->produits
+    ->find(
+        ["recettes" => ['$size' => 4]],
+        ['projection' =>
+            ["numero" => 1,
+                "libelle" => 1,
+                "recettes" => 1,]
+        ]
+    );
+
+foreach ($db as $prod) {
+    echo "<br>Numéro : " . (isset($prod["numero"]) ? $prod["numero"] : "") . " | ";
+    echo "Libellé : " . (isset($prod["libelle"]) ? $prod["libelle"] : "");
+}
+echo "<br>";
+echo "<br>";
+
+
+
+echo "5) afficher le produit n°6, compléter en listant les recettes associées (nom et difficulté)";
 $produit = $c->pizzashop->produits->findOne(["numero" => 6]);
 
 if ($produit) {
