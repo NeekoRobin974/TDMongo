@@ -96,3 +96,38 @@ if ($produit) {
         echo "Difficulté : " . ($recette["difficulte"] ?? "") . "<br>";
     }
 }
+
+function getProduitByNumeroAndTaille($client, $numero, $taille) {
+    //On recherche le produit par le numéro précisé dans l'appel de la fonction et on trie les champs qu'on veut renvoyer
+    $produit = $client->pizzashop->produits->findOne(
+        ["numero" => $numero],
+        ['projection' => ["numero" => 1, "libelle" => 1, "categorie" => 1, "tarifs" => 1]]
+    );
+
+    if (!$produit) {
+        return null;
+    }
+
+    //On prend le tarif qui correspond à la taille précisée dans l'appel de la fonction
+    $tarifTrouve = null;
+    if (isset($produit["tarifs"])) {
+        foreach ($produit["tarifs"] as $tarif) {
+            if (($tarif["taille"] ?? null) === $taille){
+                $tarifTrouve = $tarif["tarif"] ?? null;
+            }
+        }
+    }
+
+    //On retourne les informations recupérées
+    return [
+        "numero" => $produit["numero"] ?? null,
+        "libelle" => $produit["libelle"] ?? null,
+        "categorie" => $produit["categorie"] ?? null,
+        "taille" => $taille,
+        "tarif" => $tarifTrouve
+    ];
+}
+
+echo "<br>6) Fonction getProduitByNumeroAndTaille";
+$resultat = getProduitByNumeroAndTaille($c, 3, "grande");
+echo "<br>" . json_encode($resultat) . "<br>";
