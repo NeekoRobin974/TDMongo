@@ -13,7 +13,7 @@ require_once __DIR__ . "/../src/vendor/autoload.php";
 $c = new Client("mongodb://localhost:27017");
 echo "connected to mongo <br>";
 
-//1°)liste des produits : numero, categorie, libelle
+echo "1) Liste des produits : numero, categorie, libelle";
 $db = $c->pizzashop->produits
     ->find(
         [],
@@ -27,32 +27,11 @@ foreach ($db as $prod) {
     echo "Catégorie : " . (isset($prod["categorie"]) ? $prod["categorie"] : "") . " | ";
     echo "Libellé : " . (isset($prod["libelle"]) ? $prod["libelle"] : "") . "<br>";
 }
+echo "<br>";
 
-//liste des produits dont le tarif en taille normale est <= 3.0
-$db = $c->pizzashop->produits->find(
-    ["tarifs"=>[
-        '$elemMatch'=>[
-            "taille"=>"normale",
-            "tarif"=>['$lte' => 3.0]
-        ]
-    ]
-    ],
-    ["projection"=>[
-        "numero"=>1,
-        "categorie"=>1,
-        "libelle"=>1,
-        "tarifs"=>1
-    ]
-    ]
-);
 
-foreach ($db as $prod) {
-    echo "Numéro : " . (isset($prod["numero"]) ? $prod["numero"] : "") . " | ";
-    echo "Catégorie : " . (isset($prod["categorie"]) ? $prod["categorie"] : "") . " | ";
-    echo "Libellé : " . (isset($prod["libelle"]) ? $prod["libelle"] : "") . " | ";
-}
 
-//2°)afficher le produit numéro 6, préciser : libellé, catégorie, description, tarifs
+echo "2) Afficher le produit numéro 6, préciser : libellé, catégorie, description, tarifs";
 $db = $c->pizzashop->produits
     ->find(
         ["numero" => 6],
@@ -75,8 +54,11 @@ foreach ($db as $prod) {
     }
     echo "<br>";
 }
+echo "<br>";
 
-//3°)liste des produits dont le tarif en taille normale est <= 3.0
+
+
+echo "3) Liste des produits dont le tarif en taille normale est <= 3.0";
 $db = $c->pizzashop->produits
     ->find(
         ["tarifs.taille" => "normale",
@@ -95,3 +77,4 @@ foreach ($db as $prod) {
     }
     echo "<br>";
 }
+echo "<br>";
